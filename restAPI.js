@@ -47,12 +47,13 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
  // Insert some documents
 	collection.insertMany(
 	movies, function(err, result) {
-		console.log("numbeeeeeeeeer"+collection.countDocuments());
+		
 		if(err) {
-				return response.status(500).send(error);
-		}else {response.send(collection.countDocuments());
-}
-	});
+				return response.status(500).send(err);
+		}
+   
+response.send(result.result);
+	});   
 
 				  })();
 
@@ -60,6 +61,62 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
 
 });
 
+
+app.get("/delete", (request, response) => {
+  collection.remove({});
+        response.send("The database is empty, <html> <b>you have to reload de database with : </b> https://imaddevinci-denzel.glitch.me/movies/populate");
+    
+});
+
+app.get("/", (request, response) => {
+
+  
+  collection.find({}).toArray((error, result) => {
+        if(error) {
+            return response.status(500).send(error + "you maybe have to populate de database with the query : <html> <h1>https://imaddevinci-denzel.glitch.me/movies/populate</h1></html>");
+        }
+		var number = Math.floor(Math.random() * Math.floor(result.length));
+  var review=result[number].review;
+    if(review==undefined){review = "There is no review yet";}
+    var cover=result[number].cover;
+     if(cover==undefined){cover = "There is no cover";}
+			response.send(`<html> 
+<head>
+<h1>DENZEL</h1> 
+</head>
+<body> 
+<p>
+REST API and GraphQL of movies from one of the better actor : 
+<b> Denzel Washington</b> <br> Copy and past the following links into the url </b>
+</p>
+<ul> 
+
+<li> <b> To populate the collection : </b> https://imaddevinci-denzel.glitch.me/movies/populate </li> 
+<li> <b> To have all the collection : </b> https://imaddevinci-denzel.glitch.me/denzel_table </li> 
+<li> <b> To recuperate a random movie : </b> https://imaddevinci-denzel.glitch.me/movies </li> 
+<li> <b> To recuperate a movies with an id : </b> https://imaddevinci-denzel.glitch.me/movies/tt1907668</li>
+<li> <b> To search a movie with a limit and a minimum metascore : </b> https://imaddevinci-denzel.glitch.me/search?limit=5&metascore=77</li>
+<li> <b> To delete data from the database : </b> https://imaddevinci-denzel.glitch.me/delete</li>
+</ul>
+<h2>Random movies : </h2>
+
+            
+<div style="text-align: left">
+<p> <b>Title : </b>` + result[number].title +`</p>
+<p> <b>Synopsis : </b>` + result[number].synopsis +`</p>
+<p> <b>Cover : </b>` + cover +`</p>
+<p> <b>Metascore : </b>` + result[number].metascore +`</p>
+<p> <b>Review : </b>` + review +`</p>
+
+<a> <img src=`+result[number].poster+`></a>
+</div>
+<div style="text-align: left">
+
+</div>
+</body>
+</html>`);
+    });
+});
 
   app.get("/denzel_table", (request, response) => {
     collection.find({}).toArray((error, result) => {
@@ -77,15 +134,30 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
             return response.status(500).send(error);
         }
 		var number = Math.floor(Math.random() * Math.floor(result.length));
-
-        response.send(result[number]);
+ var review=result[number].review;
+    if(review==undefined){review = "There is no review yet";}
+    var cover=result[number].cover;
+     if(cover==undefined){cover = "There is no cover";}
+        response.send(`
+<html>
+<body>
+<div style="text-align: left">
+<p> <b>Link : </b>` + result[number].link +`</p>
+<p> <b>Id : </b>` + result[number].id +`</p>
+<p> <b>Rating : </b>` + result[number].rating +`</p>
+<p> <b>Votes : </b>` + result[number].votes +`</p>
+<p> <b>Year : </b>` + result[number].year +`</p>
+<p> <b>Title : </b>` + result[number].title +`</p>
+<p> <b>Synopsis : </b>` + result[number].synopsis +`</p>
+<p> <b>Cover : </b>` + cover +`</p>
+<p> <b>Metascore : </b>` + result[number].metascore +`</p>
+<p> <b>Review : </b>` + review +`</p>
+<a> <img src=`+result[number].poster+`></a>
+</div>
+</body>
+</html>`);
     });
 });
-
-
-
-
-
 
  app.get("/movies/:id", (request, response) => {
 
@@ -121,7 +193,6 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
 
 response.send(result);
 
-
     });
 
 
@@ -138,54 +209,6 @@ app.post('/movies/:id', function(req, res) {
 				collection.updateOne(
 				{"id" : req.params.id}, {$set : {"date" : date, "review": review}});
 				res.send("insert succesfully");
-		// collection.insertOne(
-	// obj, function(err, result) {
-		// console.log("Inserted Review");
-		 // res.send(result);
-	// });
 
 });
 
-/*
-
-
-
-
-
-
- var insertDocuments = function(db, callback) {
-  // Get the documents collection
-  collection = database.collection("denzel_table");
-  (async () => {
-          var movies = await sandbox(DENZEL_IMDB_ID);
-  // Insert some documents
-  collection.insertMany(
-   movies, function(err, result) {
-    console.log("Inserted 3 documents into the collection");
-    callback(result);
-  });
-				  })();
-
-}
-
-
-
-
-
-collection.findOne({}, (error, result) => {
-        if(error) {
-            return response.status(500).send(error);
-        }
-
-*/
-
-// myRouter.route('/piscines/:piscine_id')
-// .get(function(req,res){
-	  // res.json({message : "Vous souhaitez accéder aux informations de la piscine n°" + req.params.piscine_id});
-// })
-// .put(function(req,res){
-	  // res.json({message : "Vous souhaitez modifier les informations de la piscine n°" + req.params.piscine_id});
-// })
-// .delete(function(req,res){
-	  // res.json({message : "Vous souhaitez supprimer la piscine n°" + req.params.piscine_id});
-// });
