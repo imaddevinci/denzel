@@ -18,9 +18,6 @@ app.use(BodyParser.urlencoded({ extended: true }));
 const imdb = require('./src/imdb');
 const DENZEL_IMDB_ID = 'nm0000243';
 
-
-
-
 app.listen(9292, () => {
 
 MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
@@ -91,12 +88,12 @@ REST API and GraphQL of movies from one of the better actor :
 </p>
 <ul> 
 
-<li> <b> To populate the collection : </b> https://imaddevinci-denzel.glitch.me/movies/populate </li> 
-<li> <b> To have all the collection : </b> https://imaddevinci-denzel.glitch.me/denzel_table </li> 
-<li> <b> To recuperate a random movie : </b> https://imaddevinci-denzel.glitch.me/movies </li> 
-<li> <b> To recuperate a movies with an id : </b> https://imaddevinci-denzel.glitch.me/movies/tt1907668</li>
-<li> <b> To search a movie with a limit and a minimum metascore : </b> https://imaddevinci-denzel.glitch.me/search?limit=5&metascore=77</li>
-<li> <b> To delete data from the database : </b> https://imaddevinci-denzel.glitch.me/delete</li>
+<li> <b> To populate the collection : </b> https://imaddevinci-denzel.glitch.me/movies/populate  -> you can clik here : <a href = "https://imaddevinci-denzel.glitch.me/movies/populate"> link </a></li> 
+<li> <b> To have all the collection : </b> https://imaddevinci-denzel.glitch.me/denzel_table -> you can clik here : <a href = "https://imaddevinci-denzel.glitch.me/denzel_table"> link </a> </li> 
+<li> <b> To recuperate a random movie : </b> https://imaddevinci-denzel.glitch.me/movies  -> you can clik here : <a href = "https://imaddevinci-denzel.glitch.me/movies"> link </a></li> 
+<li> <b> To recuperate a movies with an id : </b> https://imaddevinci-denzel.glitch.me/movies/tt1907668 -> you can clik here : <a href = "https://imaddevinci-denzel.glitch.me/movies/tt1907668"> link </a></li>
+<li> <b> To search a movie with a limit and a minimum metascore : </b> https://imaddevinci-denzel.glitch.me/search?limit=5&metascore=77 -> you can clik here : <a href = "https://imaddevinci-denzel.glitch.me/search?limit=5&metascore=77"> link </a></li>
+<li> <b> To delete data from the database : </b> https://imaddevinci-denzel.glitch.me/delete -> you can clik here : <a href = "https://imaddevinci-denzel.glitch.me/delete"> link </a></li>
 </ul>
 <h2>Random movies : </h2>
 
@@ -212,3 +209,46 @@ app.post('/movies/:id', function(req, res) {
 
 });
 
+/*
+
+
+
+
+
+
+ var insertDocuments = function(db, callback) {
+  // Get the documents collection
+  collection = database.collection("denzel_table");
+  (async () => {
+          var movies = await sandbox(DENZEL_IMDB_ID);
+  // Insert some documents
+  collection.insertMany(
+   movies, function(err, result) {
+    console.log("Inserted 3 documents into the collection");
+    callback(result);
+  });
+				  })();
+
+}
+
+
+
+
+
+collection.findOne({}, (error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+
+*/
+
+// myRouter.route('/piscines/:piscine_id')
+// .get(function(req,res){
+	  // res.json({message : "Vous souhaitez accéder aux informations de la piscine n°" + req.params.piscine_id});
+// })
+// .put(function(req,res){
+	  // res.json({message : "Vous souhaitez modifier les informations de la piscine n°" + req.params.piscine_id});
+// })
+// .delete(function(req,res){
+	  // res.json({message : "Vous souhaitez supprimer la piscine n°" + req.params.piscine_id});
+// });
