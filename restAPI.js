@@ -102,6 +102,7 @@ REST API and GraphQL of movies from one of the better actor :
 <p> <b>Title : </b>` + result[number].title +`</p>
 <p> <b>Synopsis : </b>` + result[number].synopsis +`</p>
 <p> <b>Cover : </b>` + cover +`</p>
+<p> <b>IMDb record: </b> <a href =`+ result[number].link +`>link</a></p> 
 <p> <b>Metascore : </b>` + result[number].metascore +`</p>
 <p> <b>Review : </b>` + review +`</p>
 
@@ -139,7 +140,7 @@ REST API and GraphQL of movies from one of the better actor :
 <html>
 <body>
 <div style="text-align: left">
-<p> <b>Link : </b>` + result[number].link +`</p>
+<p> <b>Link : </b><a href =`+ result[number].link +`>link</a></p>
 <p> <b>Id : </b>` + result[number].id +`</p>
 <p> <b>Rating : </b>` + result[number].rating +`</p>
 <p> <b>Votes : </b>` + result[number].votes +`</p>
@@ -208,47 +209,3 @@ app.post('/movies/:id', function(req, res) {
 				res.send("insert succesfully");
 
 });
-
-/*
-
-
-
-
-
-
- var insertDocuments = function(db, callback) {
-  // Get the documents collection
-  collection = database.collection("denzel_table");
-  (async () => {
-          var movies = await sandbox(DENZEL_IMDB_ID);
-  // Insert some documents
-  collection.insertMany(
-   movies, function(err, result) {
-    console.log("Inserted 3 documents into the collection");
-    callback(result);
-  });
-				  })();
-
-}
-
-
-
-
-
-collection.findOne({}, (error, result) => {
-        if(error) {
-            return response.status(500).send(error);
-        }
-
-*/
-
-// myRouter.route('/piscines/:piscine_id')
-// .get(function(req,res){
-	  // res.json({message : "Vous souhaitez accéder aux informations de la piscine n°" + req.params.piscine_id});
-// })
-// .put(function(req,res){
-	  // res.json({message : "Vous souhaitez modifier les informations de la piscine n°" + req.params.piscine_id});
-// })
-// .delete(function(req,res){
-	  // res.json({message : "Vous souhaitez supprimer la piscine n°" + req.params.piscine_id});
-// });
